@@ -1,7 +1,15 @@
 ﻿using System;
+using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Embedded;
 using System.IO;
+using Raven.Abstractions.Data;
+using Kudos.Data.Indexes;
+using System.Linq;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Raven.Client.Indexes;
+using System.Reflection;
 
 namespace Kudos.Data
 {
@@ -10,7 +18,7 @@ namespace Kudos.Data
 		private static string dataDirectory = 
 			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "kudos", "db");
 
-		private static readonly DocumentStore documentStore; 
+		private static readonly IDocumentStore documentStore; 
 
 		static KudosRepository()
 		{
@@ -20,17 +28,64 @@ namespace Kudos.Data
 			};
 
 			documentStore.Initialize();
+
+			IndexCreation.CreateIndexes(typeof(KudosRepository).Assembly, documentStore);
 		}
 
 		// todo: text search for users.
-		public object FindUser(string name)
+		public FindUserResult FindUser(string name)
+		{
+			var result = new FindUserResult();
+
+			using (var session = documentStore.OpenSession())
+			{
+				var query = session.Query<User, Users_ByFullName>().Where(x => x.FullName == name);
+			
+				result.MatchedUser = query.FirstOrDefault();
+
+				if (result.MatchedUser == null)
+				{
+					result.Suggestions = query.Suggest();
+				}
+			}
+
+			return result;
+		}
+
+		public void AddUser(string userName)
 		{
 			using (var session = documentStore.OpenSession())
 			{
-				
+				var user = new User() { UserName = userName };
+
+				session.Store(user);
+				session.SaveChanges();
+
+				Debug.Assert(!string.IsNullOrEmpty(user.Id));
+			}
+		}
+
+		public User GetSingleUser(string id)
+		{
+			using (var session = documentStore.OpenSession())
+			{
+				User user = session.Load<User>("users/65");
+
+				return user;
+			}
+		}
+
+		public IEnumerable<User> GetUsers()
+		{
+			IEnumerable<User> users;
+			using (var session = documentStore.OpenSession())
+			{
+				users = session
+					.Query<User>()
+					.ToArray();
 			}
 
-			throw new NotImplementedException("todo: all the things!");
+			return users;
 		}
 	}
 }
