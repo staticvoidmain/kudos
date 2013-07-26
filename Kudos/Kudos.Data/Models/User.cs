@@ -1,14 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// -----------------------------------------------------------------------
+// <copyright file="User.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 
-namespace Kudos.Data
+namespace Kudos.Objects
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+
+	/// <summary>
+	/// TODO: Update summary.
+	/// </summary>
 	public class User
 	{
-		public string Id { get; set; }
-		public string FullName { get; set; }
-		public string UserName { get; set; }
+		public int Id { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Email { get; set; }
+		public string Picture { get; set; } // need to change the variable type for this
+		public int Points { get; set; }
+		public int NumThumbsUp { get; set; }
+		public int NumHatsOff { get; set; }
 	}
 }
