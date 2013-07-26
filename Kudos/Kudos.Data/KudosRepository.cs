@@ -1,27 +1,26 @@
 ﻿using System;
 using Raven.Client.Document;
 using Raven.Client.Embedded;
+using System.IO;
 
 namespace Kudos.Data
 {
-	// todo: MapReduce task for gathering point values for a user.
-	// todo: 
-
 	public class KudosRepository
 	{
+		private static string dataDirectory = 
+			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "kudos", "db");
+
 		private static readonly DocumentStore documentStore; 
 
 		static KudosRepository()
 		{
 			documentStore = new EmbeddableDocumentStore()  
 			{
-				DataDirectory = "/app_data/db"
+				DataDirectory = dataDirectory
 			};
 
 			documentStore.Initialize();
 		}
-
-		// init RavenDB repo here.
 
 		// todo: text search for users.
 		public object FindUser(string name)
