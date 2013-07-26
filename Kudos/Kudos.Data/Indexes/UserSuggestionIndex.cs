@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Raven.Client.Indexes;
+﻿using System.Linq;
 using Raven.Abstractions.Indexing;
+using Raven.Client.Indexes;
 
 namespace Kudos.Data.Indexes
 {
-	public class Users_ByFullName : AbstractIndexCreationTask<User>
+	
+	public class Users_ByFullName 
+		: AbstractIndexCreationTask<User>
 	{
 		public Users_ByFullName()
 		{

@@ -1,35 +1,38 @@
 ﻿using System;
-using Raven.Client;
-using Raven.Client.Document;
-using Raven.Client.Embedded;
-using System.IO;
-using Raven.Abstractions.Data;
-using Kudos.Data.Indexes;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using Kudos.Data.Indexes;
+using Raven.Client;
+using Raven.Client.Embedded;
 using Raven.Client.Indexes;
-using System.Reflection;
+using Raven.Client.Linq;
+using System.Linq;
+using Raven.Client.Document;
+using Raven.Abstractions.Data;
+// critical: we absolutely CANNOT have System.Linq in the usings.
 
 namespace Kudos.Data
 {
 	public class KudosRepository
 	{
-		private static string dataDirectory = 
-			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "kudos", "db");
-
 		private static readonly IDocumentStore documentStore; 
 
 		static KudosRepository()
 		{
-			documentStore = new EmbeddableDocumentStore()  
+			documentStore = new DocumentStore()  
 			{
-				DataDirectory = dataDirectory
+				Url = "http://localhost:8080",
 			};
 
 			documentStore.Initialize();
-
+			
 			IndexCreation.CreateIndexes(typeof(KudosRepository).Assembly, documentStore);
+		}
+
+		private IDocumentSession OpenSession()
+		{
+			return documentStore.OpenSession("kudos");
 		}
 
 		// todo: text search for users.
@@ -37,27 +40,32 @@ namespace Kudos.Data
 		{
 			var result = new FindUserResult();
 
-			using (var session = documentStore.OpenSession())
+			using (var session = OpenSession())
 			{
-				var query = session.Query<User, Users_ByFullName>().Where(x => x.FullName == name);
-			
-				result.MatchedUser = query.FirstOrDefault();
+				var query = session.Query<User>();
+
+				result.MatchedUser = query.Where(x => x.FullName == name).FirstOrDefault();
 
 				if (result.MatchedUser == null)
 				{
-					result.Suggestions = query.Suggest();
+					result.Suggestions = query.Suggest(new SuggestionQuery() 
+					{
+                        Field = "FullName",
+                        Term = name,
+                        Accuracy = 0.2f,
+                        MaxSuggestions = 5,
+                        Distance = StringDistanceTypes.JaroWinkler
+					});
 				}
 			}
 
 			return result;
 		}
 
-		public void AddUser(string userName)
+		public void AddUser(User user)
 		{
-			using (var session = documentStore.OpenSession())
+			using (var session = OpenSession())
 			{
-				var user = new User() { UserName = userName };
-
 				session.Store(user);
 				session.SaveChanges();
 
@@ -65,24 +73,14 @@ namespace Kudos.Data
 			}
 		}
 
-		public User GetSingleUser(string id)
-		{
-			using (var session = documentStore.OpenSession())
-			{
-				User user = session.Load<User>("users/65");
-
-				return user;
-			}
-		}
-
 		public IEnumerable<User> GetUsers()
 		{
 			IEnumerable<User> users;
-			using (var session = documentStore.OpenSession())
+			using (var session = OpenSession())
 			{
 				users = session
 					.Query<User>()
-					.ToArray();
+					.ToList();
 			}
 
 			return users;

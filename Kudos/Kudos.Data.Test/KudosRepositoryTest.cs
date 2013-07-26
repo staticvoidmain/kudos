@@ -9,7 +9,7 @@ namespace Kudos.Data.Test
 	public class KudosRepositoryTest
 	{
 		public TestContext TestContext { get; set; }
-		
+
 		[TestMethod]
 		public void FindUser_Exact_Match_Returns_Single_Match_User()
 		{
@@ -32,32 +32,11 @@ namespace Kudos.Data.Test
 		}
 
 		[TestMethod]
-		public void AddUser_To_DatabaseWorks()
-		{
-			KudosRepository target = new KudosRepository();
-			target.AddUser("Ross Jennings");
-			target.AddUser("Victor Diaz");
-			target.AddUser("Ravi Kant");
-			target.AddUser("Chelsey Morgan");
-		}
-
-		[TestMethod]
-		public void GetSingleUser_FindById()
-		{
-			KudosRepository repo = new KudosRepository();
-
-			User user = repo.GetSingleUser("users/65");
-
-			Assert.IsNotNull(user);
-		}
-
-		[TestMethod]
 		public void GetUsers()
 		{
-			KudosRepository target = new KudosRepository(); // TODO: Initialize to an appropriate value
+			KudosRepository target = new KudosRepository();
 			IEnumerable<User> users = target.GetUsers();
 			Assert.IsNotNull(users);
 		}
-
 	}
 }
