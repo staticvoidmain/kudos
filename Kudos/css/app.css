@@ -1,0 +1,21 @@
+body #headerPrimaryNavigation .nav .menu-item a {
+	border-top: 1px solid #333;
+}
+
+body .navbar-inverse .navbar-inner {
+	border-bottom: 5px solid #16e;
+}
+body .navbar .brand {
+	background: #f00;
+}
+
+@media (max-width: 979px) {
+	body .navbar .brand {
+		padding: 6px 20px 16px 22px;
+		width: 60px;
+	}
+	body .navbar .brand img {
+		height: 32px;
+		width: 29px;
+	}
+}
