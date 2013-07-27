@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Kudos.Data.Models;
 using Raven.Abstractions.Data;
 
 namespace Kudos.Data

@@ -7,10 +7,10 @@ using Raven.Client;
 using Raven.Client.Embedded;
 using Raven.Client.Indexes;
 using Raven.Client.Linq;
-using System.Linq;
 using Raven.Client.Document;
 using Raven.Abstractions.Data;
-// critical: we absolutely CANNOT have System.Linq in the usings.
+using Kudos.Data.Models;
+using System.Linq;
 
 namespace Kudos.Data
 {
@@ -23,6 +23,7 @@ namespace Kudos.Data
 			documentStore = new DocumentStore()  
 			{
 				Url = "http://localhost:8080",
+				DefaultDatabase = "kudos"
 			};
 
 			documentStore.Initialize();
@@ -42,7 +43,7 @@ namespace Kudos.Data
 
 			using (var session = OpenSession())
 			{
-				var query = session.Query<User>();
+				var query = session.Query<User, UsersByFullName>();
 
 				result.MatchedUser = query.Where(x => x.FullName == name).FirstOrDefault();
 
@@ -52,9 +53,9 @@ namespace Kudos.Data
 					{
                         Field = "FullName",
                         Term = name,
-                        Accuracy = 0.2f,
+                        Accuracy = 0.1f,
                         MaxSuggestions = 5,
-                        Distance = StringDistanceTypes.JaroWinkler
+                        Distance = StringDistanceTypes.Levenshtein
 					});
 				}
 			}

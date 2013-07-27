@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using Kudos.Data.Models;
 
 namespace Kudos.Data.Test
 {
@@ -24,7 +25,7 @@ namespace Kudos.Data.Test
 		public void FindUser_Incomplete_Returns_Suggested_Users()
 		{
 			KudosRepository target = new KudosRepository();
-			var result = target.FindUser("Ross");
+			var result = target.FindUser("Rossy");
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.Suggestions);

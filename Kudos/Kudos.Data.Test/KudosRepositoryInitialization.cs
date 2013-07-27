@@ -1,7 +1,5 @@
-using Kudos.Data;
+using Kudos.Data.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 
 namespace Kudos.Data.Test
 {
@@ -13,6 +11,7 @@ namespace Kudos.Data.Test
 		{
 			KudosRepository target = new KudosRepository();
 			target.AddUser(new User() { FullName = "Ross Jennings", UserName = "rjennings" });
+			target.AddUser(new User() { FullName = "Russ Testerson", UserName = "rjennings" });
 			target.AddUser(new User() { FullName = "Ravi Kant", UserName = "rkant" });
 			target.AddUser(new User() { FullName = "Victor Diaz", UserName = "vsdiaz" });
 			target.AddUser(new User() { FullName = "Chelsey Morgan", UserName = "cmorgan" });
