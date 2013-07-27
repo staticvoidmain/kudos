@@ -107,6 +107,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Kudos.Data\Kudos.Data.csproj">
+      <Project>{f52a4416-5a9a-4080-9948-92d0e6d8b162}</Project>
+      <Name>Kudos.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kudos.Web\Kudos.Web.csproj">
       <Project>{6292E150-B3E3-4003-AF77-088B44084297}</Project>
       <Name>Kudos.Web</Name>

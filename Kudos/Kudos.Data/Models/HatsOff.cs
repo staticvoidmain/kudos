@@ -1,19 +1,7 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="HatsOff.cs" company="Microsoft">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿using System;
 
 namespace Kudos.Objects
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-
-	/// <summary>
-	/// TODO: Update summary.
-	/// </summary>
 	public class HatsOff
 	{
 		public int UserId { get; set; }

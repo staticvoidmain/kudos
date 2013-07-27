@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using Kudos.Data.Indexes;
+﻿using Kudos.Data.Indexes;
+using Kudos.Data.Models;
+using Raven.Abstractions.Data;
 using Raven.Client;
-using Raven.Client.Embedded;
+using Raven.Client.Document;
 using Raven.Client.Indexes;
 using Raven.Client.Linq;
-using Raven.Client.Document;
-using Raven.Abstractions.Data;
-using Kudos.Data.Models;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Kudos.Data
@@ -18,6 +15,7 @@ namespace Kudos.Data
 	{
 		private static readonly IDocumentStore documentStore; 
 
+		// too lazy for config files.
 		static KudosRepository()
 		{
 			documentStore = new DocumentStore()  
@@ -37,6 +35,7 @@ namespace Kudos.Data
 		}
 
 		// todo: text search for users.
+		// technically we don't even need this...
 		public FindUserResult FindUser(string name)
 		{
 			var result = new FindUserResult();
@@ -69,8 +68,6 @@ namespace Kudos.Data
 			{
 				session.Store(user);
 				session.SaveChanges();
-
-				Debug.Assert(!string.IsNullOrEmpty(user.Id));
 			}
 		}
 
@@ -85,6 +82,16 @@ namespace Kudos.Data
 			}
 
 			return users;
+		}
+
+		public User GetSingleUser(int id)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void SaveUser(User newUser)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

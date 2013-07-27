@@ -1,53 +1,138 @@
-﻿<header>
-    <div class="content-wrapper">
-        <div class="float-left">
-            <p class="site-title">
-                <a href="~/">ASP.NET Web API</a></p>
+﻿<div id="main-container">
+    <div class="container">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <div id="logoSection" class="span2">
+                        <img id="fullLogo" src="images/logo.png" height="23" width="80" alt="Kudos Logo" title="Kudos" />
+                        <!--<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>-->
+                    </div>
+                    <!--<div id="headerPrimaryNavigation" class="span3">
+                        <ul class="nav">
+                            <li class="menu-item" data-bind="">
+                                <a href="#">About</a>
+                            </li>
+                            <li class="menu-item" data-bind="">
+                                <a href="#">Help</a>
+                            </li>
+                        </ul>
+                    </div>-->
+                    <div id="headerSecondaryNavigation" class="dropdown btn-group pull-right">
+                        <a class="btn dropdown-toggle settings-dropdown" data-toggle="dropdown" href="#"> <i class="icon-user"></i> <span class="caret"></span> </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li data-bind="">
+                                <a href="#">My Account</a>
+                            </li>
+                            <li id="logout" data-bind="">
+                                <a href="#">Sign Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- .container-fluid -->
+                </div>
+                <!-- .navbar-inner -->
+            </div>
+            <!-- .navbar -->
         </div>
-    </div>
-</header>
-<div id="body">
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>Welcome to ASP.NET Web API!</h1>
-                <h2>Modify the code in this template to jump-start your ASP.NET Web API development.</h2>
-            </hgroup>
-            <p>
-                ASP.NET Web API allows you to expose your applications, data and services to the
-                web directly over HTTP.
-            </p>
-            <p>
-                To learn more about ASP.NET Web API visit
-                <a href="http://go.microsoft.com/fwlink/?LinkID=238195" title="ASP.NET Web API Website">http://asp.net/web-api</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET Web API.
-                If you have any questions about ASP.NET Web API, visit
-                <a href="http://go.microsoft.com/fwlink/?LinkID=238196" title="ASP.NET Web API Forum">our forums</a>.
-            </p>
-        </div>
-    </section>
-    <section class="content-wrapper main-content clear-fix">
-        <h3>We suggest the following steps:</h3>
-        <ol class="round">
-            <li class="one">
-                <h5>Getting Started</h5>
-                ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-                a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-                is an ideal platform for building RESTful applications on the .NET Framework.
-                <a href="http://go.microsoft.com/fwlink/?LinkId=245160">Learn more…</a>
-            </li>
+        <section id="main">
+            <div id="applicationDetails">
+                <section id="homePage" class="home-content">
+                    <div class="row-fluid">
+                        <!--<div class="span3"></div>-->
+                        <div id="topSection" class="span12">
+                            <div class="well well-dark well-white-text">
+                                <h5 class="">
+                                    Who would you appreciate today?
+                                </h5>
+                                <p>
+                                    <input type="text" data-items="4" placeholder="Type a peer's name" class="span3 noMargin-bottom typeahead" />
+                                    <button id="thumbsUp" rel="popover" data-original-title="Thumbs Up!" data-placement="bottom" href="#" class="btn btn-primary" data-bind="">
+                                        <i class="icon-thumbs-up icon-white"></i>
+                                    </button>
+                                    <button id="hatsOff" rel="popover" data-original-title="Hats Off!" data-placement="bottom" href="#" class="btn btn-primary" data-bind="">
+                                        <i class="icon-star icon-white"></i>
+                                    </button>
+                                    <div id="commentPopover" style="display: none">
+                                        <textarea class="span12" rows="2"></textarea>
+                                        <a id="commentSubmit" href="#" role="button" class="btn btn-primary" data-bind="">Submit</a>
+                                    </div>
+                                </p>
+                            </div>
 
-            <li class="two">
-                <h5>Add NuGet packages and jump-start your coding</h5>
-                NuGet makes it easy to install and update free libraries and tools.
-                <a href="http://go.microsoft.com/fwlink/?LinkId=245161">Learn more…</a>
-            </li>
-            <li class="three">
-                <h5>Find Web Hosting</h5>
-                You can easily find a web hosting company that offers the right mix of features
-                and price for your applications.
-                <a href="http://go.microsoft.com/fwlink/?LinkId=245164">Learn more…</a>
-            </li>
-        </ol>
-    </section>
+                            <div id="bottomSection" class="table-wrapper">
+                                <h3 class="table-title">
+                                    Recent Appreciations
+                                </h3>
+                                <div class="well">
+                                    <div class="row-fluid">
+                                        <span class="span3">
+                                            <img src="images/CryingBaby.png" style="height: 50px; weight: 50px"></img>
+                                            Ross Jennings
+                                        </span>
+                                        <span class="span9">
+                                            <h5>
+                                                Appreciated
+                                                <span>JAMES MARSH </span>
+                                                <img src="images/smilingBaby.png" style="height: 20px; weight: 20px"></img>
+                                            </h5>
+                                            <p>
+                                                Loved your work
+                                            </p>
+                                            <a href="#">like</a>&nbsp;&nbsp;<a href="#">reply</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="well">
+                                    <div class="row-fluid">
+                                        <span class="span3">
+                                            <img src="images/CryingBaby.png" style="height: 100px; weight: 100px"></img>
+                                            Ross Jennings
+                                        </span>
+                                        <span class="span9">
+                                            <h4>
+                                                Appreciated
+                                                <span>JAMES MARSH </span>
+                                                <img src="images/smilingBaby.png" style="height: 30px; weight: 30px"></img>
+                                            </h4>
+                                            <p>
+                                                Loved your work
+                                            </p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="well">
+                                    <div class="row-fluid">
+                                        <span class="span3">
+                                            <img src="images/CryingBaby.png" style="height: 100px; weight: 100px"></img>
+                                            Ross Jennings
+                                        </span>
+                                        <span class="span9">
+                                            <h4>
+                                                Appreciated
+                                                <span>JAMES MARSH </span>
+                                                <img src="images/smilingBaby.png" style="height: 30px; weight: 30px"></img>
+                                            </h4>
+                                            <p>
+                                                Loved your work
+                                            </p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="span3"></div>-->
+                    </div><!-- .row -->
+                    <footer id="footer">
+                        <p>
+                            &copy;2013 <a href="http://www.santanderconsumerusa.com">Kudos - Appreciate your peers</a><br>
+                        </p>
+                    </footer>
+                </section>
+            </div>
+        </section>
+    </div>
 </div>
