@@ -18,29 +18,34 @@
     <!--[if lt IE 9]>
         <link rel="stylesheet" href="css/ie8-and-down.css">
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="css/base.css" />
-    <link rel="stylesheet" type="text/css" href="css/responsive.css" />
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.23.custom.css" />
-    <link rel="stylesheet" type="text/css" href="css/glyphicons.css" />
-    <link rel="stylesheet" type="text/css" href="css/app.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script src="scripts/lib/modernizr.min.js" type="text/javascript"></script>
-    <script src="Scripts/lib/jquery-1.9.1.js" type="text/javascript"></script>
-    <script src="scripts/lib/jquery-ui-1.10.2.js" type="text/javascript"></script>
-    <script src="scripts/lib/bootstrap.js" type="text/javascript"></script>
-    <script src="/signalr/hubs"></script>
+    @Styles.Render(
+        "~/css/base.css",
+        "~/css/responsive.css",
+        "~/css/jquery-ui-1.8.23.custom.css",
+        "~/css/glyphicons.css",
+        "~/css/app.css",
+        "~/css/style.css"
+    );
+
+    @Scripts.Render(
+       "~/scripts/lib/modernizr.min.js",
+       "~/Scripts/lib/jquery-1.9.1.js",
+       "~/scripts/lib/jquery-ui-1.10.2.js",
+       "~/scripts/lib/bootstrap.js",
+       "~/signalr/hubs");
 </head>
 <body class="page-home">
 
     @RenderBody()
 
-    <script type="text/javascript" src="js/lib/jquery.blockUI.js"></script>
-    <script type="text/javascript" src="js/lib/json2.js"></script>
-    <script type="text/javascript" src="js/lib/underscore.js"></script>
-    <script type="text/javascript" src="js/lib/knockout-2.2.1.js"></script>
-    <script type="text/javascript" src="js/lib/xregexp-min.js"></script>
-    <script type="text/javascript" src="js/lib/knockout.validation.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.fastLiveFilter.js"></script>
-    <script type="text/javascript" src="js/lib/moment.js"></script>
+    @Scripts.Render(
+        "~/js/lib/jquery.blockUI.js",
+        "~/js/lib/json2.js",
+        "~/js/lib/underscore.js",
+        "~/js/lib/knockout-2.2.1.js",
+        "~/js/lib/xregexp-min.js",
+        "~/js/lib/knockout.validation.js",
+        "~/js/lib/jquery.fastLiveFilter.js",
+        "~/js/lib/moment.js");
 </body>
 </html>
