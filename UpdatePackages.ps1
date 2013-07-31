@@ -1,0 +1,1 @@
+gci -Recurse -Filter packages.config | select FullName | foreach { & '.\tools\NuGet.exe' install $_.FullName -o packages }
