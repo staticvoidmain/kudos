@@ -7,7 +7,7 @@ namespace Kudos.Web
 	{
 		public static void RegisterBundles(BundleCollection bundles)
 		{
-			// todo: script bundles
+			// todo: script bundles go here obvs
 		}
 	}
 }

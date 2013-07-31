@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using Kudos.Data.Models;
 using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
-using Kudos.Data.Models;
+using System.Linq;
 
 namespace Kudos.Data.Indexes
 {

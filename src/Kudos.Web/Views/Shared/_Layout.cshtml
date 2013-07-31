@@ -25,19 +25,19 @@
         "~/css/glyphicons.css",
         "~/css/app.css",
         "~/css/style.css"
-    );
+    )
 
     @Scripts.Render(
        "~/scripts/lib/modernizr.min.js",
        "~/Scripts/lib/jquery-1.9.1.js",
        "~/scripts/lib/jquery-ui-1.10.2.js",
        "~/scripts/lib/bootstrap.js",
-       "~/signalr/hubs");
+       "~/signalr/hubs")
 </head>
 <body class="page-home">
 
     @RenderBody()
-
+    <!-- todo: turn these into bundles -->
     @Scripts.Render(
         "~/js/lib/jquery.blockUI.js",
         "~/js/lib/json2.js",
@@ -46,6 +46,6 @@
         "~/js/lib/xregexp-min.js",
         "~/js/lib/knockout.validation.js",
         "~/js/lib/jquery.fastLiveFilter.js",
-        "~/js/lib/moment.js");
+        "~/js/lib/moment.js")
 </body>
 </html>
