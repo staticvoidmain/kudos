@@ -62,15 +62,6 @@ namespace Kudos.Data
 			return result;
 		}
 
-		public void AddUser(User user)
-		{
-			using (var session = OpenSession())
-			{
-				session.Store(user);
-				session.SaveChanges();
-			}
-		}
-
 		public IEnumerable<User> GetUsers()
 		{
 			IEnumerable<User> users;
@@ -89,9 +80,49 @@ namespace Kudos.Data
 			throw new System.NotImplementedException();
 		}
 
-		public void SaveUser(User newUser)
+		public void SaveUser(User user)
 		{
-			throw new System.NotImplementedException();
+			using (var session = OpenSession())
+			{
+				session.Store(user);
+				session.SaveChanges();
+			}
+		}
+
+		public void SavePraise(Praise praise)
+		{
+			using (var session = OpenSession())
+			{
+				// todo: update the networks
+
+				session.Store(praise);
+				session.SaveChanges();
+			}
+		}
+
+		// todo: remove this once Praise properly saves changes to networks
+		// just for scaffolding purposes, ignore.
+		public void CreateNetwork(string[] ids)
+		{
+			using (var session = OpenSession())
+			{
+				session.Store(new PeerNetwork() 
+				{
+					Users = ids
+				});
+
+				session.SaveChanges();
+			}
+		}
+
+		public PeerNetwork GetUserNetwork(string userName)
+		{
+			using (var session = OpenSession())
+			{
+				return null;
+				//return session.Query<PeerNetwork, PeerNetworkByUserName>().
+				//	.FirstOrDefault();
+			}
 		}
 	}
 }

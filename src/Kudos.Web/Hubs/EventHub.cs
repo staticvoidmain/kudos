@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using Kudos.Data;
+using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
 
 namespace Kudos.Web.Hubs
@@ -10,7 +11,19 @@ namespace Kudos.Web.Hubs
 			// todo: get the ravendb "network" for this user.
 			// add this connection to the SignalR group for this network
 			var user = Context.User;
+			var repo = new KudosRepository();
+			var network = repo.GetUserNetwork(user.Identity.Name);
 
+			// hmmmmm....
+			// does the user reference the network or does the network contain the user?
+
+			// slightly easier, member of one network
+			if (network != null)
+			{
+				Groups.Add(Context.ConnectionId, network.Id);
+			}
+
+			// todo: map one member to MANY networks
 			return base.OnConnected();
 		}
 

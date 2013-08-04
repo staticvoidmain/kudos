@@ -1,13 +1,21 @@
 ﻿using System;
 
-namespace Kudos.Objects
+namespace Kudos.Data.Models
 {
-	public class HatsOff
+	public class HatsOff : Praise
 	{
-		public int UserId { get; set; }
-		public int RecipientId { get; set; }
-		public string Comments { get; set; }
 		public int Likes { get; set; }
-		public DateTime Date { get; set; }
+
+		public override decimal Value
+		{
+			get 
+			{
+				const int baseValue = 100;
+				const int maxLikes = 5;
+				const int multiplier = 100;
+
+				return baseValue + (Math.Min(maxLikes, Likes) * multiplier); 
+			}
+		}
 	}
 }

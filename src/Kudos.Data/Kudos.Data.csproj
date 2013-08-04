@@ -82,15 +82,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FindUserResult.cs" />
+    <Compile Include="Indexes\PeerNetworkByUserName.cs" />
     <Compile Include="Indexes\UserSuggestionIndex.cs" />
     <Compile Include="KudosRepository.cs" />
     <Compile Include="Models\HatsOff.cs" />
+    <Compile Include="Models\PeerNetwork.cs" />
+    <Compile Include="Models\Praise.cs" />
     <Compile Include="Models\ThumbsUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

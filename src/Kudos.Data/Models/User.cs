@@ -1,4 +1,5 @@
-﻿namespace Kudos.Data.Models
+﻿using System.Collections.Generic;
+namespace Kudos.Data.Models
 {
 	public class User
 	{
@@ -10,7 +11,5 @@
 
 		// todo: ravendb index tasks for these
 		public int Points { get; set; }
-		public int ThumbsUpCount { get; set; }
-		public int HatsOffCount { get; set; }
 	}
 }
