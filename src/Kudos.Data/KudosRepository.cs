@@ -1,37 +1,47 @@
-﻿using Kudos.Data.Indexes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Kudos.Data.Indexes;
 using Kudos.Data.Models;
 using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
 using Raven.Client.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Kudos.Data
 {
 	public class KudosRepository
 	{
-		private static readonly IDocumentStore documentStore; 
+		private static readonly IDocumentStore documentStore;
 
 		// too lazy for config files.
 		static KudosRepository()
 		{
-			documentStore = new DocumentStore()  
+			documentStore = new DocumentStore()
 			{
 				Url = "http://localhost:8080",
 				DefaultDatabase = "kudos"
 			};
 
 			documentStore.Initialize();
-			
+
 			IndexCreation.CreateIndexes(typeof(KudosRepository).Assembly, documentStore);
 		}
 
-		private IDocumentSession OpenSession()
+		// todo: remove this once Praise properly saves changes to networks
+		// just for scaffolding purposes, ignore.
+		public void CreateNetwork(string[] ids)
 		{
-			return documentStore.OpenSession("kudos");
+			using (var session = OpenSession())
+			{
+				session.Store(new PeerNetwork()
+				{
+					Users = ids
+				});
+
+				session.SaveChanges();
+			}
 		}
 
 		// todo: text search for users.
@@ -48,18 +58,60 @@ namespace Kudos.Data
 
 				if (result.MatchedUser == null)
 				{
-					result.Suggestions = query.Suggest(new SuggestionQuery() 
+					result.Suggestions = query.Suggest(new SuggestionQuery()
 					{
-                        Field = "FullName",
-                        Term = name,
-                        Accuracy = 0.1f,
-                        MaxSuggestions = 5,
-                        Distance = StringDistanceTypes.Levenshtein
+						Field = "FullName",
+						Term = name,
+						Accuracy = 0.1f,
+						MaxSuggestions = 5,
+						Distance = StringDistanceTypes.Levenshtein
 					});
 				}
 			}
 
 			return result;
+		}
+
+		public object GetLatestKudos(DateTime lastUpdate)
+		{
+			// what kind of structure should this be?
+			using (var session = OpenSession())
+			{
+				var result = session.Query<Praise, PraiseMultiMapIndex>()
+					.Where(p => p.Date >= lastUpdate)
+					.Select(p => p);
+
+				return result.ToArray();
+			}
+		}
+
+		public IList<Praise> GetPraise(string userId)
+		{
+			return new List<Praise>()
+			{
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new HatsOff() { ReceiverId = userId, Date = DateTime.Now },
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new HatsOff() { ReceiverId = userId, Date = DateTime.Now }
+			};
+		}
+
+		public User GetSingleUser(string id)
+		{
+			using (var session = OpenSession())
+			{
+				return session.Load<User>(id);
+			}
+		}
+
+		public PeerNetwork GetUserNetwork(string userName)
+		{
+			using (var session = OpenSession())
+			{
+				return session.Query<PeerNetwork, PeerNetworkByUserName>().FirstOrDefault();
+			}
 		}
 
 		public IEnumerable<User> GetUsers()
@@ -75,20 +127,6 @@ namespace Kudos.Data
 			return users;
 		}
 
-		public User GetSingleUser(int id)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public void SaveUser(User user)
-		{
-			using (var session = OpenSession())
-			{
-				session.Store(user);
-				session.SaveChanges();
-			}
-		}
-
 		public void SavePraise(Praise praise)
 		{
 			using (var session = OpenSession())
@@ -100,29 +138,18 @@ namespace Kudos.Data
 			}
 		}
 
-		// todo: remove this once Praise properly saves changes to networks
-		// just for scaffolding purposes, ignore.
-		public void CreateNetwork(string[] ids)
+		public void SaveUser(User user)
 		{
 			using (var session = OpenSession())
 			{
-				session.Store(new PeerNetwork() 
-				{
-					Users = ids
-				});
-
+				session.Store(user);
 				session.SaveChanges();
 			}
 		}
 
-		public PeerNetwork GetUserNetwork(string userName)
+		private IDocumentSession OpenSession()
 		{
-			using (var session = OpenSession())
-			{
-				return null;
-				//return session.Query<PeerNetwork, PeerNetworkByUserName>().
-				//	.FirstOrDefault();
-			}
+			return documentStore.OpenSession("kudos");
 		}
 	}
 }

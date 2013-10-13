@@ -24,21 +24,27 @@
         "~/css/jquery-ui-1.8.23.custom.css",
         "~/css/glyphicons.css",
         "~/css/app.css",
-        "~/css/style.css"
+        "~/css/style.css",
+        "~/css/toastr.min.css"
     )
 
     @Scripts.Render(
-       "~/scripts/lib/modernizr.min.js",
-       "~/Scripts/lib/jquery-1.9.1.js",
-       "~/scripts/lib/jquery-ui-1.10.2.js",
-       "~/scripts/lib/bootstrap.js",
-       "~/signalr/hubs")
+       "~/js/lib/modernizr.min.js",
+       "~/js/lib/jquery-1.9.1.js",
+       "~/js/lib/jquery-ui-1.10.2.js",
+       "~/js/lib/bootstrap.js")
+
+
+    <script type="text/javascript">
+        var hubEndpoint = '@Url.Content("~/signalr")';
+    </script>
 </head>
 <body class="page-home">
 
     @RenderBody()
     <!-- todo: turn these into bundles -->
     @Scripts.Render(
+        "~/js/lib/jquery.signalR-1.1.3.js",
         "~/js/lib/jquery.blockUI.js",
         "~/js/lib/json2.js",
         "~/js/lib/underscore.js",
@@ -46,6 +52,11 @@
         "~/js/lib/xregexp-min.js",
         "~/js/lib/knockout.validation.js",
         "~/js/lib/jquery.fastLiveFilter.js",
-        "~/js/lib/moment.js")
+        "~/js/lib/moment.js",
+        "~/js/lib/toastr.js")
+
+    @Scripts.Render("~/js/app/proxy.js") 
+    @Scripts.Render("~/js/app/models.js")
+    @Scripts.Render("~/js/app/app.js")
 </body>
 </html>

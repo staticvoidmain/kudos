@@ -20,9 +20,11 @@ namespace Kudos.Web.Controllers
 		}
 
 		// GET api/values/5
-		public User Get(int id)
+		public User Get(string id)
 		{
-			return repository.GetSingleUser(id);
+			string userId = string.Concat("users/", id);
+
+			return repository.GetSingleUser(userId);
 		}
 
 		// POST api/values

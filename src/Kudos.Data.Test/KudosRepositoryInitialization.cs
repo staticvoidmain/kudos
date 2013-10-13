@@ -59,7 +59,7 @@ namespace Kudos.Data.Test
 		[TestMethod, TestCategory("Init")]
 		public void Scaffold_Networks()
 		{
-			// builds two networks, disjointed
+			// builds two disjoint networks
 			KudosRepository repository = new KudosRepository();
 
 			var users = repository.GetUsers().ToArray();

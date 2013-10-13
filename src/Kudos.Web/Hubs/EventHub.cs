@@ -10,18 +10,17 @@ namespace Kudos.Web.Hubs
 		{
 			// todo: get the ravendb "network" for this user.
 			// add this connection to the SignalR group for this network
-			var user = Context.User;
-			var repo = new KudosRepository();
-			var network = repo.GetUserNetwork(user.Identity.Name);
+			// var user = Context.User;
+			// var repo = new KudosRepository();
+			// var network = repo.GetUserNetwork(user.Identity.Name);
 
-			// hmmmmm....
-			// does the user reference the network or does the network contain the user?
-
-			// slightly easier, member of one network
-			if (network != null)
-			{
-				Groups.Add(Context.ConnectionId, network.Id);
-			}
+			// todo: design
+			//	does the user reference the network or does the network contain the user?
+			//	slightly easier, member of one network
+			//if (network != null)
+			//{
+			//	Groups.Add(Context.ConnectionId, network.Id);
+			//}
 
 			// todo: map one member to MANY networks
 			return base.OnConnected();
@@ -34,9 +33,9 @@ namespace Kudos.Web.Hubs
 			return base.OnDisconnected();
 		}
 
-		public void Hello()
+		public void Echo(string message)
 		{
-			Clients.All.hello("Hi guys!");
+			Clients.All.echo(message);
 		}
 	}
 }

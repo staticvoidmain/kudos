@@ -1,11 +1,11 @@
-﻿using Kudos.Data.Models;
+﻿using System.Linq;
+using Kudos.Data.Models;
 using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
-using System.Linq;
 
 namespace Kudos.Data.Indexes
 {
-	public class UsersByFullName 
+	public class UsersByFullName
 		: AbstractIndexCreationTask<User>
 	{
 		public UsersByFullName()

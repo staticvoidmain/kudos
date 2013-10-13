@@ -48,19 +48,19 @@
                                 <h5 class="">
                                     Who would you appreciate today?
                                 </h5>
-                                <p>
-                                    <input type="text" data-items="4" placeholder="Type a peer's name" class="span3 noMargin-bottom typeahead" />
-                                    <button id="thumbsUp" rel="popover" data-original-title="Thumbs Up!" data-placement="bottom" href="#" class="btn btn-primary" data-bind="">
+                                <div>
+                                    <input type="text" data-items="4" placeholder="Type a peer's name" class="span3 noMargin-bottom typeahead" data-bind="value: searchText, valueUpdate: 'keydown'" />
+                                    <button id="thumbsUp" rel="popover" data-original-title="Thumbs Up!" data-placement="bottom" href="#" class="btn btn-primary" data-bind="click: thumbsUp">
                                         <i class="icon-thumbs-up icon-white"></i>
                                     </button>
-                                    <button id="hatsOff" rel="popover" data-original-title="Hats Off!" data-placement="bottom" href="#" class="btn btn-primary" data-bind="">
+                                    <button id="hatsOff" rel="popover" data-original-title="Hats Off!" data-placement="bottom" href="#" class="btn btn-primary" data-bind="click: hatsOff">
                                         <i class="icon-star icon-white"></i>
                                     </button>
                                     <div id="commentPopover" style="display: none">
                                         <textarea class="span12" rows="2"></textarea>
                                         <a id="commentSubmit" href="#" role="button" class="btn btn-primary" data-bind="">Submit</a>
                                     </div>
-                                </p>
+                                </div>
                             </div>
 
                             <div id="bottomSection" class="table-wrapper">

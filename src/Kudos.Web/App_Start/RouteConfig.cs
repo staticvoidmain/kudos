@@ -8,7 +8,7 @@ namespace Kudos.Web
 	{
 		public static void RegisterRoutes(RouteCollection routes)
 		{
-			// /signalr
+			// GET /SignalR
 			routes.MapHubs(new HubConfiguration() 
 			{ 
 				 EnableCrossDomain = false,
