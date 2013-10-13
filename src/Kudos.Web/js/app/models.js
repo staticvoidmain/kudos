@@ -16,6 +16,12 @@
 
             self.searchText.subscribe(function (val) {
                 console.log("find users matching" + val);
+
+                $.ajax({
+                    url: "/kudos/users/",
+
+                });
+
             });
 
             self.thumbsUp = function () {

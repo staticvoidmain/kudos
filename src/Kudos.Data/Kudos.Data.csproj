@@ -85,7 +85,8 @@
     <Compile Include="FindUserResult.cs" />
     <Compile Include="Indexes\PeerNetworkByUserName.cs" />
     <Compile Include="Indexes\PraiseMultiMapIndex.cs" />
-    <Compile Include="Indexes\UserSuggestionIndex.cs" />
+    <Compile Include="Indexes\PraiseStatisticsByUser.cs" />
+    <Compile Include="Indexes\UsersByFullName.cs" />
     <Compile Include="KudosRepository.cs" />
     <Compile Include="Models\HatsOff.cs" />
     <Compile Include="Models\PeerNetwork.cs" />

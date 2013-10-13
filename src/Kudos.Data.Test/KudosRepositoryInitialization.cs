@@ -53,7 +53,6 @@ namespace Kudos.Data.Test
 			}
 		}
 
-
 		// technically this should go away once SavePraise properly updates
 		// the networks, but until then we'll use it.
 		[TestMethod, TestCategory("Init")]
@@ -83,8 +82,6 @@ namespace Kudos.Data.Test
 			repository.CreateNetwork(second);
 		}
 
-		#region Private Methods
-
 		private Praise RandomPraise(Random rng)
 		{
 			if (rng.NextDouble() > 0.5)
@@ -92,9 +89,5 @@ namespace Kudos.Data.Test
 
 			return new HatsOff();
 		}
-
-		#endregion
-
-		// todo: build relationships / networks
 	}
 }

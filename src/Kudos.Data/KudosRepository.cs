@@ -44,8 +44,6 @@ namespace Kudos.Data
 			}
 		}
 
-		// todo: text search for users.
-		// technically we don't even need this...
 		public FindUserResult FindUser(string name)
 		{
 			var result = new FindUserResult();
@@ -58,7 +56,7 @@ namespace Kudos.Data
 
 				if (result.MatchedUser == null)
 				{
-					result.Suggestions = query.Suggest(new SuggestionQuery()
+					var suggest = query.Suggest(new SuggestionQuery()
 					{
 						Field = "FullName",
 						Term = name,
@@ -66,13 +64,39 @@ namespace Kudos.Data
 						MaxSuggestions = 5,
 						Distance = StringDistanceTypes.Levenshtein
 					});
+
+					if (suggest != null)
+					{
+						result.Suggestions = suggest.Suggestions;
+					}
 				}
 			}
 
 			return result;
 		}
 
-		public object GetLatestKudos(DateTime lastUpdate)
+		public PraiseStatistics GetStatistics(string user)
+		{
+			using (var session = OpenSession())
+			{
+				return session.Query<PraiseStatistics, PraiseStatisticsByUser>()
+					.Where(stats => stats.UserId == user)
+					.FirstOrDefault();
+			}
+		}
+
+		public IEnumerable<PraiseStatistics> GetTopStatistics()
+		{
+			using (var session = OpenSession())
+			{
+				return session.Query<PraiseStatistics, PraiseStatisticsByUser>()
+					.OrderByDescending(s => s.PraiseValue)
+					.Take(10)
+					.ToArray();
+			}
+		}
+
+		public IEnumerable<Praise> GetLatestKudos(DateTime lastUpdate)
 		{
 			// what kind of structure should this be?
 			using (var session = OpenSession())

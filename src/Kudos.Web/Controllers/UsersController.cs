@@ -27,6 +27,11 @@ namespace Kudos.Web.Controllers
 			return repository.GetSingleUser(userId);
 		}
 
+		public FindUserResult Find(string name)
+		{
+			return repository.FindUser(name);
+		}
+
 		// POST api/values
 		public void Post([FromBody]User newUser)
 		{

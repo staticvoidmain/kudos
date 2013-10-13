@@ -11,7 +11,7 @@ namespace Kudos.Data.Test
 	{
 		public TestContext TestContext { get; set; }
 
-		[TestMethod]
+		[TestMethod, TestCategory("UnitTest")]
 		public void FindUser_Exact_Match_Returns_Single_Match_User()
 		{
 			KudosRepository target = new KudosRepository();
@@ -21,7 +21,7 @@ namespace Kudos.Data.Test
 			Assert.IsNotNull(result.MatchedUser);
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("UnitTest")]
 		public void FindUser_Incomplete_Returns_Suggested_Users()
 		{
 			KudosRepository target = new KudosRepository();
@@ -29,15 +29,35 @@ namespace Kudos.Data.Test
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.Suggestions);
-			Assert.IsTrue(result.Suggestions.Suggestions.Length > 0);
+			Assert.IsTrue(result.Suggestions.Length > 0);
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("UnitTest")]
 		public void GetUsers()
 		{
 			KudosRepository target = new KudosRepository();
 			IEnumerable<User> users = target.GetUsers();
 			Assert.IsNotNull(users);
+		}
+
+		[TestMethod, TestCategory("UnitTest")]
+		public void GetPraiseStatsByUser()
+		{
+			KudosRepository target = new KudosRepository();
+
+			var stats = target.GetStatistics("users/4");
+
+			Assert.IsNotNull(stats);
+		}
+
+		[TestMethod, TestCategory("UnitTest")]
+		public void GetTopPraiseStatistics()
+		{
+			KudosRepository target = new KudosRepository();
+
+			var stats = target.GetTopStatistics();
+
+			Assert.IsNotNull(stats);
 		}
 	}
 }
