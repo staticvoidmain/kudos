@@ -1,11 +1,7 @@
-﻿using Kudos.Data;
-using Kudos.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using Kudos.Data;
+using Kudos.Data.Models;
 
 namespace Kudos.Web.Controllers
 {
@@ -13,13 +9,11 @@ namespace Kudos.Web.Controllers
 	{
 		private KudosRepository repository = new KudosRepository();
 
-		// GET api/values
 		public IEnumerable<User> Get()
 		{
 			return repository.GetUsers();
 		}
 
-		// GET api/values/5
 		public User Get(string id)
 		{
 			string userId = string.Concat("users/", id);
@@ -27,12 +21,12 @@ namespace Kudos.Web.Controllers
 			return repository.GetSingleUser(userId);
 		}
 
+		[HttpGet]
 		public FindUserResult Find(string name)
 		{
 			return repository.FindUser(name);
 		}
 
-		// POST api/values
 		public void Post([FromBody]User newUser)
 		{
 			repository.SaveUser(newUser);

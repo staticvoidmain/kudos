@@ -204,6 +204,7 @@
     <Compile Include="App_Start\UpdateMonitor.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NetworkController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\KudosController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />

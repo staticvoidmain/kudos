@@ -11,6 +11,8 @@ using Raven.Client.Linq;
 
 namespace Kudos.Data
 {
+	// I read that the repository pattern kinda sucks for RavenDB
+	// TODO: Refactor to the controllers. Single session per controller.
 	public class KudosRepository
 	{
 		private static readonly IDocumentStore documentStore;
@@ -30,7 +32,7 @@ namespace Kudos.Data
 		}
 
 		// todo: remove this once Praise properly saves changes to networks
-		// just for scaffolding purposes, ignore.
+		// just for scaffolding purposes,.
 		public void CreateNetwork(string[] ids)
 		{
 			using (var session = OpenSession())
@@ -50,18 +52,17 @@ namespace Kudos.Data
 
 			using (var session = OpenSession())
 			{
-				var query = session.Query<User, UsersByFullName>();
+				var query = session.Query<User, UsersByName>();
+				var matches = query.Where(x => x.FullName.StartsWith(name)).ToArray();
 
-				result.MatchedUser = query.Where(x => x.FullName == name).FirstOrDefault();
-
-				if (result.MatchedUser == null)
+				if (matches.Length == 0)
 				{
 					var suggest = query.Suggest(new SuggestionQuery()
 					{
 						Field = "FullName",
 						Term = name,
 						Accuracy = 0.1f,
-						MaxSuggestions = 5,
+						MaxSuggestions = 3,
 						Distance = StringDistanceTypes.Levenshtein
 					});
 
@@ -70,9 +71,65 @@ namespace Kudos.Data
 						result.Suggestions = suggest.Suggestions;
 					}
 				}
+				else
+				{
+					result.MatchedUsers = matches.ToArray();
+				}
 			}
 
 			return result;
+		}
+
+		public IEnumerable<Praise> GetLatestKudos(DateTime lastUpdate)
+		{
+			using (var session = OpenSession())
+			{
+				var result = session.Query<Praise, PraiseMultiMapIndex>()
+					.Where(p => p.Date >= lastUpdate)
+					.Select(p => p);
+
+				return result.ToArray();
+			}
+		}
+
+		public PeerNetwork GetNetwork(int id)
+		{
+			using (var session = OpenSession())
+			{
+				string key = string.Concat("peernetworks/", id);
+
+				return session.Load<PeerNetwork>(key);
+			}
+		}
+
+		public IEnumerable<PeerNetwork> GetNetworks()
+		{
+			using (var session = OpenSession())
+			{
+				return session.Query<PeerNetwork>().ToArray();
+			}
+		}
+
+		// todo: scaffolding, remove.
+		public IList<Praise> GetPraise(string userId)
+		{
+			return new List<Praise>()
+			{
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new HatsOff() { ReceiverId = userId, Date = DateTime.Now },
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
+				new HatsOff() { ReceiverId = userId, Date = DateTime.Now }
+			};
+		}
+
+		public User GetSingleUser(string id)
+		{
+			using (var session = OpenSession())
+			{
+				return session.Load<User>(id);
+			}
 		}
 
 		public PraiseStatistics GetStatistics(string user)
@@ -96,68 +153,36 @@ namespace Kudos.Data
 			}
 		}
 
-		public IEnumerable<Praise> GetLatestKudos(DateTime lastUpdate)
-		{
-			// what kind of structure should this be?
-			using (var session = OpenSession())
-			{
-				var result = session.Query<Praise, PraiseMultiMapIndex>()
-					.Where(p => p.Date >= lastUpdate)
-					.Select(p => p);
-
-				return result.ToArray();
-			}
-		}
-
-		public IList<Praise> GetPraise(string userId)
-		{
-			return new List<Praise>()
-			{
-				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
-				new HatsOff() { ReceiverId = userId, Date = DateTime.Now },
-				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
-				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
-				new ThumbsUp() { ReceiverId = userId, Date = DateTime.Now },
-				new HatsOff() { ReceiverId = userId, Date = DateTime.Now }
-			};
-		}
-
-		public User GetSingleUser(string id)
-		{
-			using (var session = OpenSession())
-			{
-				return session.Load<User>(id);
-			}
-		}
-
 		public PeerNetwork GetUserNetwork(string userName)
 		{
 			using (var session = OpenSession())
 			{
-				return session.Query<PeerNetwork, PeerNetworkByUserName>().FirstOrDefault();
+				return session.Advanced.LuceneQuery<PeerNetwork, PeerNetworkByUserName>()
+					.Where(string.Concat("UserNames: ", userName))
+					.FirstOrDefault();
 			}
 		}
 
 		public IEnumerable<User> GetUsers()
 		{
-			IEnumerable<User> users;
 			using (var session = OpenSession())
 			{
-				users = session
+				return session
 					.Query<User>()
-					.ToList();
+					.ToArray();
 			}
-
-			return users;
 		}
 
 		public void SavePraise(Praise praise)
 		{
 			using (var session = OpenSession())
 			{
+				session.Store(praise);
+
 				// todo: update the networks
 
-				session.Store(praise);
+				// get the
+
 				session.SaveChanges();
 			}
 		}
@@ -174,6 +199,16 @@ namespace Kudos.Data
 		private IDocumentSession OpenSession()
 		{
 			return documentStore.OpenSession("kudos");
+		}
+
+		public User GetUserByUserName(string name)
+		{
+			using (var session = OpenSession())
+			{
+				return session.Query<User, UsersByName>()
+					.Where(user => user.UserName == name)
+					.FirstOrDefault();
+			}
 		}
 	}
 }

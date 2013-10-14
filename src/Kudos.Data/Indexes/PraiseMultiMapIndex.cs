@@ -15,6 +15,8 @@ namespace Kudos.Data.Indexes
 			AddMap<ThumbsUp>(collection => collection.Select(praise => new { praise.Date }));
 
 			AddMap<HatsOff>(collection => collection.Select(praise => new { praise.Date }));
+
+			// the implication here is that there is no reduce step, so all fields are available.
 		}
 	}
 }

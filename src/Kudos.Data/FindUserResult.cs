@@ -1,11 +1,12 @@
-﻿using Kudos.Data.Models;
+﻿using System.Collections.Generic;
+using Kudos.Data.Models;
 using Raven.Abstractions.Data;
 
 namespace Kudos.Data
 {
 	public class FindUserResult
 	{
-		public User MatchedUser { get; set; }
+		public IEnumerable<User> MatchedUsers { get; set; }
 		public string[] Suggestions { get; set; }
 	}
 }

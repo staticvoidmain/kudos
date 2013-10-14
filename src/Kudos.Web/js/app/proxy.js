@@ -7,7 +7,9 @@
         KudosProxy: function () {
             this.sendHatsOff = function () { };
             this.sendThumbsUp = function () { };
-            this.getUsers = function () { };
+            this.getUsers = function () {
+                
+            };
         },
         EventProxy: function (connection) {
             var connection = $.hubConnection('/kudos/signalr');

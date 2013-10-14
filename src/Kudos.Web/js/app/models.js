@@ -8,7 +8,7 @@
             var self = this;
 
             function findUser() {
-                // todo
+                kudos.findUser()
             }
 
             self.searchText = ko.observable();
@@ -17,10 +17,11 @@
             self.searchText.subscribe(function (val) {
                 console.log("find users matching" + val);
 
-                $.ajax({
-                    url: "/kudos/users/",
+                var findUserResult = findUser(val);
 
-                });
+                // okay, strategy: 
+                //  if the first letter has been typed
+                // todo: get 
 
             });
 

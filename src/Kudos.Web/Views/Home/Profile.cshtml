@@ -1,11 +1,12 @@
-﻿
+﻿@model Kudos.Data.Models.User
+
 <div id="main-container">
     <div class="container">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
                     <div id="logoSection" class="span10">
-                        <img id="fullLogo" src="images/logo.png" height="47" width="160" alt="Kudos Logo" title="Kudos" />
+                        <img id="fullLogo" src="@Url.Content("~/images/logo.png")" height="47" width="160" alt="Kudos Logo" title="Kudos" />
                         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -26,7 +27,7 @@
                         <a class="btn dropdown-toggle settings-dropdown" data-toggle="dropdown" href="#"> <i class="icon-user"></i> <span class="caret"></span> </a>
                         <ul class="dropdown-menu" role="menu">
                             <li data-bind="">
-                                <a href="myaccount.html">My Account</a>
+                                <a href="@Url.Action("profile", "home")">My Account</a>
                             </li>
                             <li id="logout" data-bind="">
                                 <a href="#">Sign Out</a>
@@ -43,9 +44,9 @@
             <div class="well">
                 <div class="row-fluid">
                     <span class="span3">
-                        <img src="images/CryingBaby.png" style="height: 100px; weight: 100px"></img>
+                        <img src="@this.Model.Picture" style="height: 100px; width: 100px" />
                     </span>
-                    <div>Ross Jennings</div>
+                    <div>@this.Model.FullName</div>
                 </div>
             </div>
             <div id="applicationDetails">
@@ -59,7 +60,7 @@
                     </div><!-- .row -->
                     <footer id="footer">
                         <p>
-                            &copy;2013 <a href="http://www.santanderconsumerusa.com">Kudos - Appreciate your peers</a><br>
+                            Kudos - Appreciate your peers
                         </p>
                     </footer>
                 </section>

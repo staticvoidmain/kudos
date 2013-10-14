@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using Kudos.Data.Models;
+using System.Linq;
 
 namespace Kudos.Data.Test
 {
@@ -18,7 +19,7 @@ namespace Kudos.Data.Test
 			var result = target.FindUser("Ross Jennings");
 
 			Assert.IsNotNull(result);
-			Assert.IsNotNull(result.MatchedUser);
+			Assert.IsNotNull(result.MatchedUsers);
 		}
 
 		[TestMethod, TestCategory("UnitTest")]
@@ -33,15 +34,16 @@ namespace Kudos.Data.Test
 		}
 
 		[TestMethod, TestCategory("UnitTest")]
-		public void GetUsers()
+		public void GetUsers_Returns_Non_Null_Collection()
 		{
 			KudosRepository target = new KudosRepository();
 			IEnumerable<User> users = target.GetUsers();
 			Assert.IsNotNull(users);
+			Assert.AreNotEqual(0, users.Count());
 		}
 
 		[TestMethod, TestCategory("UnitTest")]
-		public void GetPraiseStatsByUser()
+		public void GetStatistics_ByUser_Returns_Non_Null_Collection()
 		{
 			KudosRepository target = new KudosRepository();
 
@@ -58,6 +60,15 @@ namespace Kudos.Data.Test
 			var stats = target.GetTopStatistics();
 
 			Assert.IsNotNull(stats);
+		}
+
+		[TestMethod, TestCategory("UnitTest")]
+		public void GetUserNetwork_For_Existing_User_Returns_Network()
+		{
+			var target = new KudosRepository();
+			var network = target.GetUserNetwork("rjennings");
+
+			Assert.IsNotNull(network);
 		}
 	}
 }

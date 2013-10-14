@@ -5,15 +5,16 @@ using Raven.Client.Indexes;
 
 namespace Kudos.Data.Indexes
 {
-	public class UsersByFullName
+	public class UsersByName
 		: AbstractIndexCreationTask<User>
 	{
-		public UsersByFullName()
+		public UsersByName()
 		{
 			Map = users => from user in users
-						   select new { user.FullName };
+						   select new { user.FullName, user.UserName };
 
 			Indexes.Add(x => x.FullName, FieldIndexing.Analyzed);
+			Indexes.Add(x => x.UserName, FieldIndexing.Default);
 		}
 	}
 }
